@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Joke Single Serving Website</title>
+    <style>
+        /* Center the entire content */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font: 1em sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Style the header */
+        header {
+            text-align: center;
+        }
+
+        /* Style the main content section */
+        main {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Style the buttons */
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            color: white;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid gray;
+        }
+
+        /* Center the footer at the bottom of the page */
+        footer {
+            text-align: center;
+            margin-top: auto;
+            padding-bottom: 50px;
+        }
+        .above {
+            padding: 10px 20px;
+            color: white;
+            background-color: green;
+            width: 100%;
+            max-width: 992px;
+            margin-top: 100px;
+        }
+
+        .container{
+            max-width: 1440px;
+            width: 100%;
+            padding: 0 32px;
+            margin: 0 auto;
+        }
+
+        #likeButton {
+            background: blue;
+        }
+
+        #dislikeButton {
+            background: green;
+        }
+
+        #clearButton {
+            background: red;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+    </header>
+
+    <main>
+        <div class="content">
+            <section>
+                <div class="container">
+                    <div class="above">
+                        <h1>A joke a day keeps the doctor away</h1>
+                        <p>If you joke wrong way, your teeth have to pay. (Serious)</p>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="container">
+                    <p><%= content %></p>
+                    <% if(id){ %>
+                    <button id="likeButton">This is Funny!</button>
+                    <button id="dislikeButton">This is not funny.</button>
+                    <% } else{ %> 
+                    <button id="clearButton">CLEAR!!!</button>
+                    <% } %>
+                <div class="container">
+            </section>
+            <footer class="">
+                <div class="container">
+                This website is created as part of Hlsolutions program. The materials contained on git website are provided for general
+                information only and do not constitute any form advice. HLS assumes no responsibility for the accuracy of any particular statement and
+                accepts no liability for any loss or damage which may arise from reliance on the information contained on this site.
+                <p>&copy; 2023 HLS Assignment</p>
+            </div>
+            </footer>
+        </div>
+    </main>
+
+    
+    <script>
+        const id = '<%= id%>';
+            const likeButton = document.getElementById("likeButton");
+            const disLikeButton = document.getElementById("dislikeButton");
+            const clearButton = document.getElementById("clearButton")
+
+            if (likeButton) {
+                likeButton.addEventListener("click", function () {
+                    fetch('/', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ "id": id, "isLike": true })
+                    }).then(window.location.reload())
+                })
+            }
+
+            if (disLikeButton) {
+                disLikeButton.addEventListener("click", function () {
+                    fetch('/', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ "id": id, "isLike": false })
+                    }).then(window.location.reload())
+                })
+            }
+
+            if (clearButton) {
+                clearButton.addEventListener("click", function () {
+                    fetch('/clear', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({})
+                    }).then(window.location.reload())
+                })
+            }
+    </script>
+</body>
+</html>
