@@ -1,2 +1,5 @@
 # How to run
-node app.js
+```bash
+# run this
+$ node app.js
+```
